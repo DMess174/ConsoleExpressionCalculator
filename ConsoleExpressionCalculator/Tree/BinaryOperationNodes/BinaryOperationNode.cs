@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ConsoleExpressionCalculator.Tree
+namespace ConsoleExpressionCalculator.Tree.BinaryOperationNodes
 {
-    public class BinaryOperationNode : TreeNode
+    public abstract class BinaryOperationNode : TreeNode
     {
         private readonly TreeNode _leftSideNode;
         private readonly TreeNode _rightSideNode;

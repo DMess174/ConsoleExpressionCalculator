@@ -6,29 +6,43 @@ namespace ConsoleExpressionCalculator
     {
         static void Main(string[] args)
         {
-            Calculate(GetExpression());
+            Run();
         }
 
-        static void Calculate(string expression)
+        static void Run()
         {
-            Console.WriteLine(StringExpressionParser.Parse(expression).Evaluate());
+            while(true)
+            {
+                Console.WriteLine("Please enter the expression to calculate or 'quit' to exit:");
 
-            CalculateAnotherExpression();
+                var calculator = new Calculator();
+
+                var stringExpression = Console.ReadLine();
+
+                switch(stringExpression)
+                {
+                    case "quit":
+                        return;
+
+                    default:
+                        try
+                        {
+                            StringExpressionVerifier.VerifyExpression(stringExpression);
+
+                            var result = calculator.Calculate(stringExpression);
+
+                            Console.WriteLine($"{stringExpression} = {result}");
+                            
+                            continue;
+                        }
+                        catch(FormatException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+
+                            continue;
+                        }
+                }
+            }
         }
-
-        static string GetExpression()
-        {
-            Console.WriteLine("Введите выражение для расчета");
-            return Console.ReadLine().Replace(" ", "");
-        }
-
-        static void CalculateAnotherExpression()
-        {
-            Console.WriteLine("Для ввода нового выражения введите \"y\"");
-
-            if (Console.ReadLine() == "y")
-                Calculate(GetExpression());
-        }
-
     }
 }
